@@ -31,8 +31,8 @@ export default function Contact() {
           style={{
             marginTop: '64px', padding: '52px',
             borderRadius: '28px',
-            background: 'linear-gradient(135deg, rgba(0,212,255,0.04), rgba(168,85,247,0.04))',
-            border: '1px solid rgba(0,212,255,0.15)',
+            background: 'linear-gradient(135deg, color-mix(in srgb, var(--cyan) 4%, transparent), color-mix(in srgb, var(--purple) 4%, transparent))',
+            border: '1px solid color-mix(in srgb, var(--cyan) 15%, transparent)',
             backdropFilter: 'blur(30px)',
             position: 'relative', overflow: 'hidden',
           }}
@@ -41,18 +41,18 @@ export default function Contact() {
           <div style={{
             position: 'absolute', top: -80, right: -80,
             width: 250, height: 250, borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(168,85,247,0.12), transparent 70%)',
+            background: 'radial-gradient(circle, color-mix(in srgb, var(--purple) 12%, transparent), transparent 70%)',
             pointerEvents: 'none',
           }} />
           <div style={{
             position: 'absolute', bottom: -80, left: -80,
             width: 250, height: 250, borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(0,212,255,0.08), transparent 70%)',
+            background: 'radial-gradient(circle, color-mix(in srgb, var(--cyan) 8%, transparent), transparent 70%)',
             pointerEvents: 'none',
           }} />
 
           <p style={{
-            textAlign: 'center', color: 'rgba(240,248,255,0.55)',
+            textAlign: 'center', color: 'var(--secondary)',
             fontSize: '1.05rem', lineHeight: 1.75, marginBottom: '44px',
           }}>
             Whether you want to collaborate on cutting-edge AI research, need a driven full-stack developer,
@@ -69,16 +69,16 @@ export default function Contact() {
 
             <motion.button
               type="submit"
-              whileHover={{ scale: 1.02, boxShadow: '0 0 40px rgba(0,212,255,0.4)' }}
+              whileHover={{ scale: 1.02, boxShadow: 'var(--glow-cyan)' }}
               whileTap={{ scale: 0.98 }}
               data-hover
               style={{
                 marginTop: '8px',
                 padding: '16px 40px',
                 borderRadius: '14px',
-                border: '1px solid rgba(0,212,255,0.5)',
-                background: 'linear-gradient(135deg, rgba(0,212,255,0.12), rgba(168,85,247,0.12))',
-                color: '#00d4ff', fontWeight: 700, fontSize: '1rem',
+                border: '1px solid color-mix(in srgb, var(--cyan) 50%, transparent)',
+                background: 'linear-gradient(135deg, color-mix(in srgb, var(--cyan) 12%, transparent), color-mix(in srgb, var(--purple) 12%, transparent))',
+                color: 'var(--cyan)', fontWeight: 700, fontSize: '1rem',
                 fontFamily: 'var(--font-main)', cursor: 'none',
                 letterSpacing: '0.05em',
                 transition: 'all 0.25s',
@@ -91,10 +91,10 @@ export default function Contact() {
           {/* Social links */}
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginTop: '40px', flexWrap: 'wrap' }}>
             {[
-              { label: 'GitHub', href: PERSONAL.github, color: '#f0f8ff' },
-              { label: 'LinkedIn', href: PERSONAL.linkedin, color: '#00d4ff' },
-              { label: 'LeetCode', href: PERSONAL.leetcode, color: '#f59e0b' },
-              { label: 'Email', href: `mailto:${PERSONAL.email}`, color: '#a855f7' },
+              { label: 'GitHub', href: PERSONAL.github, color: 'var(--primary)' },
+              { label: 'LinkedIn', href: PERSONAL.linkedin, color: 'var(--cyan)' },
+              { label: 'LeetCode', href: PERSONAL.leetcode, color: 'var(--amber)' },
+              { label: 'Email', href: `mailto:${PERSONAL.email}`, color: 'var(--purple)' },
             ].map((s) => (
               <motion.a
                 key={s.label}
@@ -105,8 +105,8 @@ export default function Contact() {
                 data-hover
                 style={{
                   padding: '10px 22px', borderRadius: '12px',
-                  border: `1px solid ${s.color}22`,
-                  background: `${s.color}08`,
+                  border: `1px solid color-mix(in srgb, ${s.color} 20%, transparent)`,
+                  background: `color-mix(in srgb, ${s.color} 8%, transparent)`,
                   color: s.color, fontWeight: 600,
                   fontSize: '0.88rem', textDecoration: 'none',
                   fontFamily: 'var(--font-main)',
@@ -132,13 +132,13 @@ function FloatingInput({ label, value, onChange, type = 'text', multiline = fals
 
   const base = {
     width: '100%', padding: '20px 16px 8px',
-    background: 'rgba(255,255,255,0.03)',
-    border: `1px solid ${active ? 'rgba(0,212,255,0.4)' : 'rgba(255,255,255,0.08)'}`,
-    borderRadius: '12px', color: '#f0f8ff',
+    background: 'var(--glass-bg)',
+    border: `1px solid ${active ? 'color-mix(in srgb, var(--cyan) 40%, transparent)' : 'var(--glass-border)'}`,
+    borderRadius: '12px', color: 'var(--primary)',
     fontFamily: 'var(--font-main)', fontSize: '0.95rem',
     outline: 'none', resize: 'none' as const,
     transition: 'border-color 0.2s, box-shadow 0.2s',
-    boxShadow: active ? '0 0 0 3px rgba(0,212,255,0.06)' : 'none',
+    boxShadow: active ? '0 0 0 3px color-mix(in srgb, var(--cyan) 6%, transparent)' : 'none',
   };
 
   return (
@@ -148,7 +148,7 @@ function FloatingInput({ label, value, onChange, type = 'text', multiline = fals
         top: active ? '8px' : '50%',
         transform: active ? 'none' : 'translateY(-50%)',
         fontSize: active ? '0.7rem' : '0.9rem',
-        color: active ? '#00d4ff' : 'rgba(240,248,255,0.35)',
+        color: active ? 'var(--cyan)' : 'var(--muted)',
         transition: 'all 0.2s', pointerEvents: 'none',
         fontFamily: 'var(--font-mono)',
       }}>
@@ -181,15 +181,15 @@ function SectionHeader({ label, title }: { label: string; title: string }) {
   return (
     <div style={{ textAlign: 'center' }}>
       <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-        style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#00d4ff', letterSpacing: '0.2em', marginBottom: '12px' }}>
+        style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--cyan)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: '12px' }}>
         {label}
       </motion.div>
       <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: '#f0f8ff' }}>
+        style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: 'var(--primary)' }}>
         {title}
       </motion.h2>
       <motion.div initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: 0.2, duration: 0.6 }}
-        style={{ width: '60px', height: '3px', background: 'linear-gradient(90deg, #00d4ff, #a855f7)', borderRadius: '2px', margin: '16px auto 0' }} />
+        style={{ width: '60px', height: '3px', background: 'linear-gradient(90deg, var(--cyan), var(--purple))', borderRadius: '2px', margin: '16px auto 0' }} />
     </div>
   );
 }

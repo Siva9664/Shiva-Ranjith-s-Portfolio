@@ -10,7 +10,7 @@ export default function Timeline() {
 
         <motion.p
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-          style={{ textAlign: 'center', color: 'rgba(240,248,255,0.4)', fontFamily: 'var(--font-mono)', fontSize: '0.78rem', marginTop: '12px', letterSpacing: '0.05em' }}
+          style={{ textAlign: 'center', color: 'var(--muted)', fontFamily: 'var(--font-mono)', fontSize: '0.78rem', marginTop: '12px', letterSpacing: '0.05em' }}
         >
           Each year is a planet · Achievements unlock as constellations
         </motion.p>
@@ -25,7 +25,7 @@ export default function Timeline() {
             transition={{ duration: 1.5, ease: 'easeInOut' }}
             style={{
               position: 'absolute', top: '56px', left: '60px', right: '60px', height: '2px',
-              background: 'linear-gradient(90deg, #00d4ff22, #a855f788, #00d4ff22)',
+              background: 'linear-gradient(90deg, color-mix(in srgb, var(--cyan) 15%, transparent), color-mix(in srgb, var(--purple) 55%, transparent), color-mix(in srgb, var(--cyan) 15%, transparent))',
               transformOrigin: 'left',
               display: 'none', // hide on mobile, shown on desktop via below
             }}
@@ -51,15 +51,15 @@ export default function Timeline() {
                 {/* Planet */}
                 <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
                   <motion.div
-                    animate={{ boxShadow: [`0 0 20px ${era.color}44`, `0 0 40px ${era.color}88`, `0 0 20px ${era.color}44`] }}
+                    animate={{ boxShadow: [`0 0 20px color-mix(in srgb, ${era.color} 25%, transparent)`, `0 0 40px color-mix(in srgb, ${era.color} 55%, transparent)`, `0 0 20px color-mix(in srgb, ${era.color} 25%, transparent)`] }}
                     transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.4 }}
                     style={{
                       width: 72, height: 72, borderRadius: '50%',
-                      background: `radial-gradient(circle at 35% 35%, ${era.color}ee, ${era.color}55 60%, ${era.color}22)`,
-                      border: `2px solid ${era.color}88`,
+                      background: `radial-gradient(circle at 35% 35%, color-mix(in srgb, ${era.color} 90%, transparent), color-mix(in srgb, ${era.color} 35%, transparent) 60%, color-mix(in srgb, ${era.color} 15%, transparent))`,
+                      border: `2px solid color-mix(in srgb, ${era.color} 55%, transparent)`,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       fontFamily: 'var(--font-mono)', fontWeight: 800, fontSize: '0.85rem',
-                      color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,0.6)',
+                      color: 'var(--white)', textShadow: '0 1px 4px rgba(0,0,0,0.6)',
                       flexShrink: 0,
                     }}
                   >
@@ -67,7 +67,7 @@ export default function Timeline() {
                   </motion.div>
                   {/* Connector to next */}
                   {i < TIMELINE.length - 1 && (
-                    <div style={{ width: '2px', height: '40px', background: `linear-gradient(to bottom, ${era.color}66, ${TIMELINE[i + 1].color}33)` }} />
+                    <div style={{ width: '2px', height: '40px', background: `linear-gradient(to bottom, color-mix(in srgb, ${era.color} 40%, transparent), color-mix(in srgb, ${TIMELINE[i + 1].color} 20%, transparent))` }} />
                   )}
                 </div>
 
@@ -76,14 +76,14 @@ export default function Timeline() {
                   whileHover={{ y: -6, scale: 1.01 }}
                   style={{
                     flex: 1, padding: '24px 28px', borderRadius: '18px',
-                    background: `linear-gradient(135deg, ${era.color}08, rgba(0,0,0,0.4))`,
-                    border: `1px solid ${era.color}22`,
+                    background: `linear-gradient(135deg, color-mix(in srgb, ${era.color} 8%, transparent), var(--bg-card))`,
+                    border: `1px solid color-mix(in srgb, ${era.color} 15%, transparent)`,
                     backdropFilter: 'blur(20px)',
                     maxWidth: '600px',
                   }}
                 >
                   <h3 style={{ color: era.color, fontWeight: 700, fontSize: '1.15rem', marginBottom: '6px' }}>{era.title}</h3>
-                  <p style={{ color: 'rgba(240,248,255,0.55)', fontSize: '0.88rem', lineHeight: 1.65, marginBottom: '16px' }}>{era.description}</p>
+                  <p style={{ color: 'var(--secondary)', fontSize: '0.88rem', lineHeight: 1.65, marginBottom: '16px' }}>{era.description}</p>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                     {era.achievements.map((a, ai) => (
                       <motion.span
@@ -94,7 +94,8 @@ export default function Timeline() {
                         transition={{ delay: i * 0.1 + ai * 0.08 }}
                         style={{
                           padding: '4px 12px', borderRadius: '999px', fontSize: '0.75rem',
-                          background: `${era.color}10`, border: `1px solid ${era.color}33`,
+                          background: `color-mix(in srgb, ${era.color} 10%, transparent)`, 
+                          border: `1px solid color-mix(in srgb, ${era.color} 25%, transparent)`,
                           color: era.color, fontFamily: 'var(--font-mono)', fontWeight: 500,
                         }}
                       >
@@ -116,15 +117,15 @@ function SectionHeader({ label, title }: { label: string; title: string }) {
   return (
     <div style={{ textAlign: 'center' }}>
       <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-        style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#00d4ff', letterSpacing: '0.2em', marginBottom: '12px' }}>
+        style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--cyan)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: '12px' }}>
         {label}
       </motion.div>
       <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: '#f0f8ff' }}>
+        style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: 'var(--primary)' }}>
         {title}
       </motion.h2>
       <motion.div initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: 0.2, duration: 0.6 }}
-        style={{ width: '60px', height: '3px', background: 'linear-gradient(90deg, #00d4ff, #a855f7)', borderRadius: '2px', margin: '16px auto 0' }} />
+        style={{ width: '60px', height: '3px', background: 'linear-gradient(90deg, var(--cyan), var(--purple))', borderRadius: '2px', margin: '16px auto 0' }} />
     </div>
   );
 }

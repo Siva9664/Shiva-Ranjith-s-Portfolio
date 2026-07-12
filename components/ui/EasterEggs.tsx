@@ -92,14 +92,14 @@ export default function EasterEggs() {
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             style={{
               position: 'fixed', inset: 0, zIndex: 9990, pointerEvents: 'none',
-              background: 'rgba(0,212,255,0.04)',
-              boxShadow: 'inset 0 0 200px rgba(0,212,255,0.15)',
+              background: 'color-mix(in srgb, var(--cyan) 4%, transparent)',
+              boxShadow: 'inset 0 0 200px color-mix(in srgb, var(--cyan) 15%, transparent)',
             }}
           >
             <div style={{
               position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
-              fontFamily: 'var(--font-mono)', color: '#00d4ff', fontSize: '1rem',
-              textAlign: 'center', textShadow: '0 0 20px #00d4ff',
+              fontFamily: 'var(--font-mono)', color: 'var(--cyan)', fontSize: '1rem',
+              textAlign: 'center', textShadow: '0 0 20px var(--cyan)',
             }}>
               <div style={{ fontSize: '2rem', marginBottom: '12px' }}>⚡ AI MODE ACTIVATED ⚡</div>
               <div style={{ opacity: 0.6, fontSize: '0.85rem' }}>Neural pathways at maximum capacity</div>
@@ -114,14 +114,14 @@ export default function EasterEggs() {
       <motion.button
         onClick={() => setAiOpen((o) => !o)}
         whileHover={{ scale: 1.1 }}
-        animate={{ boxShadow: ['0 0 20px rgba(0,212,255,0.4)', '0 0 40px rgba(0,212,255,0.7)', '0 0 20px rgba(0,212,255,0.4)'] }}
+        animate={{ boxShadow: ['0 0 20px color-mix(in srgb, var(--cyan) 40%, transparent)', '0 0 40px color-mix(in srgb, var(--cyan) 70%, transparent)', '0 0 20px color-mix(in srgb, var(--cyan) 40%, transparent)'] }}
         transition={{ boxShadow: { duration: 2, repeat: Infinity } }}
         data-hover
         style={{
           position: 'fixed', bottom: '32px', right: '32px', zIndex: 500,
           width: 56, height: 56, borderRadius: '50%',
-          background: 'radial-gradient(circle at 35% 35%, rgba(0,212,255,0.9), rgba(168,85,247,0.6))',
-          border: '1px solid rgba(0,212,255,0.6)',
+          background: 'radial-gradient(circle at 35% 35%, color-mix(in srgb, var(--cyan) 90%, transparent), color-mix(in srgb, var(--purple) 60%, transparent))',
+          border: '1px solid color-mix(in srgb, var(--cyan) 60%, transparent)',
           cursor: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontSize: '1.4rem',
         }}
@@ -139,24 +139,24 @@ export default function EasterEggs() {
             style={{
               position: 'fixed', bottom: '100px', right: '32px', zIndex: 500,
               width: '340px', borderRadius: '20px',
-              background: 'rgba(2,4,8,0.92)',
-              border: '1px solid rgba(0,212,255,0.2)',
+              background: 'var(--bg-secondary)',
+              border: '1px solid color-mix(in srgb, var(--cyan) 20%, transparent)',
               backdropFilter: 'blur(30px)',
-              boxShadow: '0 20px 60px rgba(0,212,255,0.15)',
+              boxShadow: '0 20px 60px color-mix(in srgb, var(--cyan) 15%, transparent)',
               overflow: 'hidden',
             }}
           >
             {/* Header */}
             <div style={{
-              padding: '16px 20px', borderBottom: '1px solid rgba(0,212,255,0.1)',
+              padding: '16px 20px', borderBottom: '1px solid color-mix(in srgb, var(--cyan) 10%, transparent)',
               display: 'flex', alignItems: 'center', gap: '10px',
             }}>
-              <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#10b981', boxShadow: '0 0 8px #10b981' }} />
-              <span style={{ fontFamily: 'var(--font-mono)', color: '#00d4ff', fontSize: '0.85rem', fontWeight: 600 }}>
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--emerald)', boxShadow: '0 0 8px var(--emerald)' }} />
+              <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--cyan)', fontSize: '0.85rem', fontWeight: 600 }}>
                 SR · AI Assistant
               </span>
               <button onClick={() => setAiOpen(false)}
-                style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'rgba(240,248,255,0.4)', cursor: 'none', fontSize: '1rem' }}>
+                style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'var(--secondary)', cursor: 'none', fontSize: '1rem' }}>
                 ✕
               </button>
             </div>
@@ -164,7 +164,7 @@ export default function EasterEggs() {
             {/* Messages */}
             <div style={{ height: '220px', overflowY: 'auto', padding: '16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {aiMessages.length === 0 && (
-                <div style={{ color: 'rgba(240,248,255,0.3)', fontSize: '0.8rem', fontFamily: 'var(--font-mono)', textAlign: 'center', marginTop: '40px' }}>
+                <div style={{ color: 'var(--muted)', fontSize: '0.8rem', fontFamily: 'var(--font-mono)', textAlign: 'center', marginTop: '40px' }}>
                   Type &quot;hello&quot; to begin
                 </div>
               )}
@@ -174,9 +174,9 @@ export default function EasterEggs() {
                   style={{
                     alignSelf: m.from === 'user' ? 'flex-end' : 'flex-start',
                     maxWidth: '80%', padding: '10px 14px', borderRadius: '14px',
-                    background: m.from === 'user' ? 'rgba(0,212,255,0.15)' : 'rgba(168,85,247,0.1)',
-                    border: `1px solid ${m.from === 'user' ? 'rgba(0,212,255,0.3)' : 'rgba(168,85,247,0.2)'}`,
-                    color: 'rgba(240,248,255,0.85)', fontSize: '0.82rem', lineHeight: 1.5,
+                    background: m.from === 'user' ? 'color-mix(in srgb, var(--cyan) 15%, transparent)' : 'color-mix(in srgb, var(--purple) 10%, transparent)',
+                    border: `1px solid ${m.from === 'user' ? 'color-mix(in srgb, var(--cyan) 30%, transparent)' : 'color-mix(in srgb, var(--purple) 20%, transparent)'}`,
+                    color: 'var(--primary)', fontSize: '0.82rem', lineHeight: 1.5,
                     fontFamily: 'var(--font-main)',
                   }}
                 >
@@ -186,7 +186,7 @@ export default function EasterEggs() {
             </div>
 
             {/* Input */}
-            <div style={{ padding: '12px 16px', borderTop: '1px solid rgba(0,212,255,0.1)', display: 'flex', gap: '8px' }}>
+            <div style={{ padding: '12px 16px', borderTop: '1px solid color-mix(in srgb, var(--cyan) 10%, transparent)', display: 'flex', gap: '8px' }}>
               <input
                 ref={inputRef}
                 value={aiInput}
@@ -195,15 +195,15 @@ export default function EasterEggs() {
                 placeholder="Ask anything…"
                 style={{
                   flex: 1, padding: '8px 12px', borderRadius: '10px',
-                  background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(0,212,255,0.15)',
-                  color: '#f0f8ff', fontFamily: 'var(--font-mono)', fontSize: '0.82rem', outline: 'none',
+                  background: 'var(--glass-bg)', border: '1px solid color-mix(in srgb, var(--cyan) 15%, transparent)',
+                  color: 'var(--primary)', fontFamily: 'var(--font-mono)', fontSize: '0.82rem', outline: 'none',
                 }}
               />
               <button onClick={sendMessage} data-hover
                 style={{
                   padding: '8px 14px', borderRadius: '10px',
-                  background: 'rgba(0,212,255,0.15)', border: '1px solid rgba(0,212,255,0.3)',
-                  color: '#00d4ff', cursor: 'none', fontWeight: 700, fontSize: '0.85rem',
+                  background: 'color-mix(in srgb, var(--cyan) 15%, transparent)', border: '1px solid color-mix(in srgb, var(--cyan) 30%, transparent)',
+                  color: 'var(--cyan)', cursor: 'none', fontWeight: 700, fontSize: '0.85rem',
                 }}>
                 →
               </button>
@@ -220,23 +220,23 @@ export default function EasterEggs() {
             transition={{ type: 'spring', damping: 25 }}
             style={{
               position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 9000,
-              height: '260px', background: 'rgba(0,0,0,0.97)',
-              borderTop: '1px solid rgba(0,212,255,0.3)',
+              height: '260px', background: 'var(--bg-primary)',
+              borderTop: '1px solid color-mix(in srgb, var(--cyan) 30%, transparent)',
               backdropFilter: 'blur(20px)', padding: '20px 28px',
-              fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: '#00d4ff',
+              fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--cyan)',
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
               <span>▶ SR_OS :: Developer Console v1.0</span>
               <button onClick={() => setDevConsole(false)}
-                style={{ background: 'none', border: 'none', color: '#00d4ff', cursor: 'none' }}>✕ CLOSE</button>
+                style={{ background: 'none', border: 'none', color: 'var(--cyan)', cursor: 'none' }}>✕ CLOSE</button>
             </div>
-            <div style={{ color: 'rgba(0,212,255,0.5)', lineHeight: 1.8 }}>
-              <div>{'>'} <span style={{ color: '#10b981' }}>system.init()</span> — Neural OS booted successfully</div>
-              <div>{'>'} <span style={{ color: '#a855f7' }}>modules.load()</span> — Three.js · R3F · Framer Motion · GSAP</div>
-              <div>{'>'} <span style={{ color: '#f59e0b' }}>user.identify()</span> — Sivaranjith S · AI/ML Engineer</div>
-              <div>{'>'} <span style={{ color: '#00d4ff' }}>portfolio.render()</span> — All sections operational ⚡</div>
-              <div style={{ marginTop: '8px', color: 'rgba(0,212,255,0.3)', fontSize: '0.7rem' }}>
+            <div style={{ color: 'color-mix(in srgb, var(--cyan) 50%, transparent)', lineHeight: 1.8 }}>
+              <div>{'>'} <span style={{ color: 'var(--emerald)' }}>system.init()</span> — Neural OS booted successfully</div>
+              <div>{'>'} <span style={{ color: 'var(--purple)' }}>modules.load()</span> — Three.js · R3F · Framer Motion · GSAP</div>
+              <div>{'>'} <span style={{ color: 'var(--amber)' }}>user.identify()</span> — Sivaranjith S · AI/ML Engineer</div>
+              <div>{'>'} <span style={{ color: 'var(--cyan)' }}>portfolio.render()</span> — All sections operational ⚡</div>
+              <div style={{ marginTop: '8px', color: 'color-mix(in srgb, var(--cyan) 30%, transparent)', fontSize: '0.7rem' }}>
                 TIP: Type &quot;hello&quot; to chat with the AI · Konami code activates AI mode
               </div>
             </div>
@@ -259,7 +259,7 @@ function DigitalRain() {
           style={{
             position: 'absolute', left: `${i * 5 + Math.random() * 3}%`,
             fontFamily: 'var(--font-mono)', fontSize: '0.75rem',
-            color: '#00d4ff', lineHeight: 1.2, whiteSpace: 'pre',
+            color: 'var(--cyan)', lineHeight: 1.2, whiteSpace: 'pre',
           }}
         >
           {Array.from({ length: 30 }).map(() => String.fromCharCode(0x30A0 + Math.random() * 96)).join('\n')}

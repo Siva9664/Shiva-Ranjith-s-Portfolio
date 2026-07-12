@@ -5,161 +5,165 @@ import { PROJECTS } from '@/lib/data';
 
 export default function Projects() {
   const [hovered, setHovered] = useState<string | null>(null);
-  const [expanded, setExpanded] = useState<string | null>(null);
 
   return (
-    <section id="projects" style={{ position: 'relative', zIndex: 10, padding: '120px 24px' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <SectionHeader label="03 / PROJECTS" title="Holographic Project Worlds" />
+    <section id="projects" className="section" aria-label="Projects">
+      <div className="container">
+        <SectionHeader index="03" label="Projects" title="Holographic Project Worlds" />
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '28px', marginTop: '64px' }}>
-          {PROJECTS.map((project) => {
-            const isHovered = hovered === project.id;
-            const isExpanded = expanded === project.id;
-
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '24px', marginTop: '56px' }}>
+          {PROJECTS.map((project, i) => {
+            const isHov = hovered === project.id;
             return (
-              <motion.div
+              <motion.article
                 key={project.id}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.7 }}
+                transition={{ delay: i * 0.1, duration: 0.7 }}
                 onMouseEnter={() => setHovered(project.id)}
                 onMouseLeave={() => setHovered(null)}
-                style={{ position: 'relative' }}
+                whileHover={{ y: -10 }}
+                className="glass-card"
+                style={{
+                  borderRadius: '20px', overflow: 'hidden',
+                  border: `1px solid color-mix(in srgb, ${project.color} ${isHov ? '40%' : '15%'}, transparent)`,
+                  background: `linear-gradient(135deg, color-mix(in srgb, ${project.color} 4%, transparent), var(--bg-card))`,
+                  boxShadow: isHov ? `0 20px 60px color-mix(in srgb, ${project.color} 15%, transparent)` : 'none',
+                  transition: 'all 0.35s cubic-bezier(0.16,1,0.3,1)',
+                }}
               >
-                {/* Cube card */}
-                <motion.div
-                  whileHover={{ y: -12, rotateY: 3, rotateX: -3 }}
-                  animate={{ boxShadow: isHovered ? `0 20px 60px ${project.color}30, 0 0 0 1px ${project.color}44` : '0 4px 30px rgba(0,0,0,0.4)' }}
-                  transition={{ duration: 0.35 }}
-                  style={{
-                    borderRadius: '20px', overflow: 'hidden',
-                    background: `linear-gradient(135deg, rgba(255,255,255,0.03), rgba(${project.color === '#00d4ff' ? '0,212,255' : project.color === '#a855f7' ? '168,85,247' : '16,185,129'},0.04))`,
-                    border: `1px solid ${project.color}22`,
-                    backdropFilter: 'blur(20px)',
-                    transformStyle: 'preserve-3d',
-                    cursor: 'none',
-                  }}
-                >
-                  {/* Top bar */}
-                  <div style={{
-                    height: '4px',
-                    background: `linear-gradient(90deg, ${project.color}, ${project.color}44)`,
-                  }} />
+                {/* Accent bar */}
+                <div style={{ height: '3px', background: `linear-gradient(90deg, ${project.color}, color-mix(in srgb, ${project.color} 40%, transparent))` }} />
 
-                  <div style={{ padding: '28px' }}>
-                    {/* Header row */}
-                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '20px' }}>
-                      <div style={{
-                        width: 52, height: 52, borderRadius: '14px', fontSize: '1.6rem',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        background: `${project.color}14`, border: `1px solid ${project.color}30`,
-                        boxShadow: isHovered ? `0 0 20px ${project.color}44` : 'none',
-                        transition: 'box-shadow 0.3s',
-                      }}>
-                        {project.icon}
-                      </div>
+                <div style={{ padding: '28px' }}>
+                  {/* Header */}
+                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '20px' }}>
+                    <div style={{
+                      width: 50, height: 50, borderRadius: '14px',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem',
+                      background: `color-mix(in srgb, ${project.color} 10%, transparent)`,
+                      border: `1px solid color-mix(in srgb, ${project.color} 25%, transparent)`,
+                      boxShadow: isHov ? `0 0 20px color-mix(in srgb, ${project.color} 30%, transparent)` : 'none',
+                      transition: 'box-shadow 0.3s',
+                    }}>
+                      {project.icon}
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '6px' }}>
                       {project.badge && (
                         <span style={{
-                          padding: '4px 10px', borderRadius: '999px', fontSize: '0.7rem',
-                          background: `${project.color}14`, border: `1px solid ${project.color}44`,
+                          padding: '3px 10px', borderRadius: '999px', fontSize: '0.68rem',
+                          background: `color-mix(in srgb, ${project.color} 12%, transparent)`,
+                          border: `1px solid color-mix(in srgb, ${project.color} 35%, transparent)`,
                           color: project.color, fontFamily: 'var(--font-mono)', fontWeight: 600,
                         }}>{project.badge}</span>
                       )}
-                    </div>
-
-                    <h3 style={{ color: '#f0f8ff', fontWeight: 700, fontSize: '1.2rem', marginBottom: '10px' }}>{project.title}</h3>
-                    <p style={{ color: 'rgba(240,248,255,0.45)', fontSize: '0.85rem', lineHeight: 1.7, marginBottom: '20px' }}>{project.tagline}</p>
-
-                    {/* Architecture preview (on hover) */}
-                    <AnimatePresence>
-                      {isHovered && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          style={{ overflow: 'hidden', marginBottom: '16px' }}
-                        >
-                          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '12px' }}>
-                            {project.architecture.map((step, i) => (
-                              <div key={step} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <motion.span
-                                  initial={{ opacity: 0, x: -10 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  transition={{ delay: i * 0.1 }}
-                                  style={{
-                                    padding: '3px 10px', borderRadius: '6px', fontSize: '0.7rem',
-                                    background: `${project.color}0f`,
-                                    border: `1px solid ${project.color}33`,
-                                    color: project.color, fontFamily: 'var(--font-mono)',
-                                  }}
-                                >
-                                  {step}
-                                </motion.span>
-                                {i < project.architecture.length - 1 && (
-                                  <span style={{ color: `${project.color}66`, fontSize: '0.6rem' }}>→</span>
-                                )}
-                              </div>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-
-                    {/* Tech tags */}
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '24px' }}>
-                      {project.tech.map((t) => (
-                        <span key={t} style={{
-                          padding: '4px 10px', borderRadius: '6px', fontSize: '0.72rem',
-                          background: 'rgba(255,255,255,0.04)',
-                          border: '1px solid rgba(255,255,255,0.1)',
-                          color: 'rgba(240,248,255,0.6)', fontFamily: 'var(--font-mono)',
-                        }}>{t}</span>
-                      ))}
-                    </div>
-
-                    {/* Status + Links */}
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                       <span style={{
-                        padding: '4px 10px', borderRadius: '999px', fontSize: '0.7rem',
-                        background: project.status === 'Live' ? 'rgba(16,185,129,0.1)' : 'rgba(168,85,247,0.1)',
-                        border: `1px solid ${project.status === 'Live' ? 'rgba(16,185,129,0.3)' : 'rgba(168,85,247,0.3)'}`,
-                        color: project.status === 'Live' ? '#10b981' : '#a855f7',
+                        padding: '3px 10px', borderRadius: '999px', fontSize: '0.68rem',
+                        background: project.status === 'Live' || project.status === 'Production' ? 'color-mix(in srgb, var(--emerald) 10%, transparent)' : 'color-mix(in srgb, var(--purple) 10%, transparent)',
+                        border: `1px solid ${project.status === 'Live' || project.status === 'Production' ? 'color-mix(in srgb, var(--emerald) 30%, transparent)' : 'color-mix(in srgb, var(--purple) 30%, transparent)'}`,
+                        color: project.status === 'Live' || project.status === 'Production' ? 'var(--emerald)' : 'var(--purple)',
                         fontFamily: 'var(--font-mono)', fontWeight: 600,
                       }}>
-                        {project.status === 'Live' ? '● Live' : '● Research'}
+                        ● {project.status}
                       </span>
-                      <div style={{ display: 'flex', gap: '8px' }}>
-                        {project.links.demo && (
-                          <motion.a href={project.links.demo} target="_blank" rel="noopener noreferrer"
-                            whileHover={{ scale: 1.1 }} data-hover
-                            style={{
-                              padding: '6px 14px', borderRadius: '8px', fontSize: '0.78rem',
-                              background: `${project.color}14`, border: `1px solid ${project.color}44`,
-                              color: project.color, fontWeight: 600, textDecoration: 'none',
-                              fontFamily: 'var(--font-main)',
-                            }}>
-                            Live ↗
-                          </motion.a>
-                        )}
-                        {project.links.paper && (
-                          <motion.a href={project.links.paper} target="_blank" rel="noopener noreferrer"
-                            whileHover={{ scale: 1.1 }} data-hover
-                            style={{
-                              padding: '6px 14px', borderRadius: '8px', fontSize: '0.78rem',
-                              background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.12)',
-                              color: 'rgba(240,248,255,0.7)', fontWeight: 600, textDecoration: 'none',
-                              fontFamily: 'var(--font-main)',
-                            }}>
-                            Paper ↗
-                          </motion.a>
-                        )}
-                      </div>
                     </div>
                   </div>
-                </motion.div>
-              </motion.div>
+
+                  <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.15rem', color: 'var(--primary)', marginBottom: '8px' }}>
+                    {project.title}
+                  </h3>
+                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', color: project.color, marginBottom: '14px', opacity: 0.8 }}>
+                    {project.tagline}
+                  </p>
+                  <p style={{ color: 'var(--secondary)', fontSize: '0.87rem', lineHeight: 1.7, marginBottom: '20px', fontFamily: 'var(--font-body)' }}>
+                    {project.description}
+                  </p>
+
+                  {/* Architecture reveal on hover */}
+                  <AnimatePresence>
+                    {isHov && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        style={{ overflow: 'hidden', marginBottom: '16px' }}
+                      >
+                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: 'var(--secondary)', marginBottom: '8px', letterSpacing: '0.12em' }}>
+                          ARCHITECTURE
+                        </div>
+                        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                          {project.architecture.map((step, si) => (
+                            <div key={step} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                              <motion.span
+                                initial={{ opacity: 0, x: -8 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: si * 0.08 }}
+                                style={{
+                                  padding: '3px 10px', borderRadius: '6px', fontSize: '0.7rem',
+                                  background: `color-mix(in srgb, ${project.color} 10%, transparent)`, 
+                                  border: `1px solid color-mix(in srgb, ${project.color} 25%, transparent)`,
+                                  color: project.color, fontFamily: 'var(--font-mono)',
+                                }}
+                              >
+                                {step}
+                              </motion.span>
+                              {si < project.architecture.length - 1 && (
+                                <span style={{ color: `color-mix(in srgb, ${project.color} 40%, transparent)`, fontSize: '0.65rem' }}>→</span>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {/* Tech tags */}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '7px', marginBottom: '24px' }}>
+                    {project.tech.map((t) => (
+                      <span key={t} style={{
+                        padding: '3px 10px', borderRadius: '6px', fontSize: '0.72rem',
+                        background: 'var(--glass-bg)', border: '1px solid var(--border-subtle)',
+                        color: 'var(--secondary)', fontFamily: 'var(--font-mono)',
+                      }}>
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Links */}
+                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--muted)' }}>{project.year}</span>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      {project.links.demo && (
+                        <motion.a href={project.links.demo} target="_blank" rel="noopener noreferrer"
+                          whileHover={{ scale: 1.05 }} data-hover
+                          style={{
+                            padding: '6px 14px', borderRadius: '8px', fontSize: '0.78rem',
+                            background: `color-mix(in srgb, ${project.color} 10%, transparent)`,
+                            border: `1px solid color-mix(in srgb, ${project.color} 35%, transparent)`,
+                            color: project.color, fontWeight: 600, textDecoration: 'none',
+                            fontFamily: 'var(--font-body)',
+                          }}>
+                          Live ↗
+                        </motion.a>
+                      )}
+                      {project.links.paper && (
+                        <motion.a href={project.links.paper} target="_blank" rel="noopener noreferrer"
+                          whileHover={{ scale: 1.05 }} data-hover
+                          style={{
+                            padding: '6px 14px', borderRadius: '8px', fontSize: '0.78rem',
+                            background: 'var(--glass-bg)', border: '1px solid var(--glass-border)',
+                            color: 'var(--secondary)', fontWeight: 600, textDecoration: 'none',
+                            fontFamily: 'var(--font-body)',
+                          }}>
+                          Paper ↗
+                        </motion.a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </motion.article>
             );
           })}
         </div>
@@ -168,19 +172,20 @@ export default function Projects() {
   );
 }
 
-function SectionHeader({ label, title }: { label: string; title: string }) {
+function SectionHeader({ index, label, title }: { index: string; label: string; title: string }) {
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div>
       <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-        style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#00d4ff', letterSpacing: '0.2em', marginBottom: '12px' }}>
-        {label}
+        style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--cyan)', opacity: 0.5, letterSpacing: '0.2em' }}>{index}</span>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--cyan)', opacity: 0.5, letterSpacing: '0.15em' }}>/ {label.toUpperCase()}</span>
       </motion.div>
       <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: '#f0f8ff' }}>
+        style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: 'var(--primary)', letterSpacing: '-0.02em' }}>
         {title}
       </motion.h2>
-      <motion.div initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: 0.2, duration: 0.6 }}
-        style={{ width: '60px', height: '3px', background: 'linear-gradient(90deg, #00d4ff, #a855f7)', borderRadius: '2px', margin: '16px auto 0' }} />
+      <motion.div initial={{ scaleX: 0, originX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: 0.2, duration: 0.7 }}
+        style={{ width: '48px', height: '2px', background: 'linear-gradient(90deg, var(--cyan), var(--purple))', borderRadius: '2px', marginTop: '14px' }} />
     </div>
   );
 }

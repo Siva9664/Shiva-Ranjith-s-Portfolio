@@ -1,146 +1,125 @@
 'use client';
 import { motion } from 'framer-motion';
-import { PERSONAL } from '@/lib/data';
+import type { Variants } from 'framer-motion';
+import { PERSONAL, ENGINEERING_DOMAINS } from '@/lib/data';
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
+};
+const containerVariants: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.15 } },
+};
 
 const cards = [
+  { title: 'Who I Am', icon: '🧠', color: 'var(--cyan)', content: PERSONAL.bio[0] },
+  { title: 'What I Build', icon: '⚡', color: 'var(--purple)', content: PERSONAL.bio[1] },
   {
-    title: 'Who I Am',
-    icon: '🧠',
-    color: '#00d4ff',
-    content: 'B.Tech AI & ML student at Sri Shakthi Institute of Engineering and Technology. Competitive programmer turned full-stack AI engineer. Arch Linux power user who thrives on technical complexity.',
-  },
-  {
-    title: 'What I Build',
-    icon: '⚡',
-    color: '#a855f7',
-    content: 'Intelligent scheduling systems, high-performance web platforms, and enterprise ERP solutions. From fine-tuning PyTorch models to architecting React + Firebase applications at scale.',
-  },
-  {
-    title: 'Where I\'m Heading',
-    icon: '🚀',
-    color: '#10b981',
-    content: 'Seeking roles where technical ambition meets real-world problem-solving. Passionate about the intersection of AI research and production-grade engineering. Always learning, always shipping.',
+    title: "Where I'm Heading", icon: '🚀', color: 'var(--emerald)',
+    content: 'Building AI systems that reshape how humans and machines work together. Seeking challenging roles at the intersection of AI research and production-grade engineering.',
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.2 } },
-};
-
-import type { Variants } from 'framer-motion';
-
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
-};
-
 export default function About() {
   return (
-    <section id="about" style={{ position: 'relative', zIndex: 10, padding: '120px 24px' }}>
-      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-        {/* Section header */}
-        <SectionHeader label="01 / ABOUT" title="The Mind Behind the Code" />
+    <section id="about" className="section" aria-label="About Siva Ranjith">
+      <div className="container">
+        <SectionHeader index="01" label="About" title="The Mind Behind the Code" />
 
-        {/* Cards grid */}
+        {/* Bio cards */}
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginTop: '64px' }}
+          variants={containerVariants} initial="hidden" whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginTop: '56px' }}
         >
           {cards.map((card) => (
             <motion.div
               key={card.title}
               variants={cardVariants}
-              whileHover={{ y: -8, rotateY: 4, scale: 1.02 }}
+              whileHover={{ y: -8, scale: 1.01 }}
+              className="glass-card"
               style={{
-                background: 'rgba(255,255,255,0.02)',
-                border: `1px solid ${card.color}22`,
-                borderRadius: '20px',
-                padding: '36px 28px',
-                backdropFilter: 'blur(20px)',
-                cursor: 'default',
-                transformStyle: 'preserve-3d',
+                borderRadius: '20px', padding: '32px 28px',
+                border: `1px solid color-mix(in srgb, ${card.color} 15%, transparent)`,
+                background: `linear-gradient(135deg, color-mix(in srgb, ${card.color} 5%, transparent), var(--bg-card))`,
                 transition: 'box-shadow 0.3s',
-                boxShadow: `0 4px 40px ${card.color}0a`,
               }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.boxShadow = `0 8px 60px ${card.color}20, 0 0 0 1px ${card.color}33`;
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.boxShadow = `0 4px 40px ${card.color}0a`;
-              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.boxShadow = `0 12px 50px color-mix(in srgb, ${card.color} 12%, transparent), 0 0 0 1px color-mix(in srgb, ${card.color} 25%, transparent)`; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.boxShadow = ''; }}
             >
-              {/* Icon */}
               <div style={{
-                width: 56, height: 56, borderRadius: '16px', marginBottom: '20px',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '1.8rem',
-                background: `${card.color}14`,
-                border: `1px solid ${card.color}30`,
-                boxShadow: `0 0 20px ${card.color}15`,
+                width: 52, height: 52, borderRadius: '14px', marginBottom: '20px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem',
+                background: `color-mix(in srgb, ${card.color} 10%, transparent)`, border: `1px solid color-mix(in srgb, ${card.color} 25%, transparent)`,
               }}>
                 {card.icon}
               </div>
-
-              {/* Color bar */}
-              <div style={{ width: '40px', height: '3px', borderRadius: '2px', background: card.color, marginBottom: '16px', boxShadow: `0 0 12px ${card.color}` }} />
-
-              <h3 style={{ color: '#f0f8ff', fontWeight: 700, fontSize: '1.2rem', marginBottom: '12px' }}>{card.title}</h3>
-              <p style={{ color: 'rgba(240,248,255,0.55)', fontSize: '0.95rem', lineHeight: 1.75 }}>{card.content}</p>
+              <div style={{ width: 36, height: '2px', background: card.color, borderRadius: '2px', marginBottom: '16px' }} />
+              <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.15rem', color: 'var(--primary)', marginBottom: '12px' }}>
+                {card.title}
+              </h3>
+              <p style={{ color: 'var(--secondary)', fontSize: '0.9rem', lineHeight: 1.78, fontFamily: 'var(--font-body)' }}>
+                {card.content}
+              </p>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Stats row */}
+        {/* Engineering identity grid */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          style={{ display: 'flex', gap: '32px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '64px' }}
+          initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.8 }}
+          style={{ marginTop: '56px' }}
         >
-          {[
-            { label: 'Projects Shipped', value: '5+' },
-            { label: 'Research Papers', value: '1' },
-            { label: 'Internship', value: 'GrowAITech' },
-            { label: 'Focus Area', value: 'AI / Full-Stack' },
-          ].map((stat) => (
-            <div key={stat.label} style={{
-              padding: '20px 32px', borderRadius: '16px', textAlign: 'center',
-              background: 'rgba(0,212,255,0.03)', border: '1px solid rgba(0,212,255,0.1)',
-            }}>
-              <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#00d4ff', marginBottom: '4px' }}>{stat.value}</div>
-              <div style={{ fontSize: '0.8rem', color: 'rgba(240,248,255,0.4)', fontFamily: 'var(--font-mono)', letterSpacing: '0.08em' }}>{stat.label}</div>
-            </div>
-          ))}
+          <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--cyan)', opacity: 0.5, letterSpacing: '0.15em', marginBottom: '24px' }}>
+            ENGINEERING SPECIALIZATIONS
+          </h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '14px' }}>
+            {ENGINEERING_DOMAINS.map((d, i) => (
+              <motion.div
+                key={d.id}
+                initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }} transition={{ delay: i * 0.07, duration: 0.5 }}
+                whileHover={{ x: 6 }}
+                style={{
+                  display: 'flex', alignItems: 'flex-start', gap: '14px',
+                  padding: '18px 20px', borderRadius: '14px',
+                  background: `color-mix(in srgb, ${d.color} 5%, transparent)`, 
+                  border: `1px solid color-mix(in srgb, ${d.color} 15%, transparent)`,
+                  transition: 'border-color 0.2s',
+                }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.borderColor = `color-mix(in srgb, ${d.color} 35%, transparent)`; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.borderColor = `color-mix(in srgb, ${d.color} 15%, transparent)`; }}
+              >
+                <span style={{ fontSize: '1.3rem', flexShrink: 0 }}>{d.icon}</span>
+                <div>
+                  <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, color: d.color, fontSize: '0.9rem', marginBottom: '4px' }}>{d.label}</div>
+                  <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.8rem', color: 'var(--secondary)', lineHeight: 1.5 }}>{d.desc}</div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>
   );
 }
 
-function SectionHeader({ label, title }: { label: string; title: string }) {
+function SectionHeader({ index, label, title }: { index: string; label: string; title: string }) {
   return (
-    <div style={{ textAlign: 'center' }}>
-      <motion.div
-        initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#00d4ff', letterSpacing: '0.2em', marginBottom: '12px' }}
-      >
-        {label}
+    <div>
+      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+        style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--cyan)', opacity: 0.5, letterSpacing: '0.2em' }}>{index}</span>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--cyan)', opacity: 0.5, letterSpacing: '0.15em' }}>/ {label.toUpperCase()}</span>
       </motion.div>
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
-        style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: '#f0f8ff' }}
-      >
+      <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+        style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: 'var(--primary)', letterSpacing: '-0.02em' }}>
         {title}
       </motion.h2>
-      <motion.div
-        initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: 0.2, duration: 0.6 }}
-        style={{ width: '60px', height: '3px', background: 'linear-gradient(90deg, #00d4ff, #a855f7)', borderRadius: '2px', margin: '16px auto 0' }}
-      />
+      <motion.div initial={{ scaleX: 0, originX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: 0.2, duration: 0.7 }}
+        style={{ width: '48px', height: '2px', background: 'linear-gradient(90deg, var(--cyan), var(--purple))', borderRadius: '2px', marginTop: '14px' }} />
     </div>
   );
 }

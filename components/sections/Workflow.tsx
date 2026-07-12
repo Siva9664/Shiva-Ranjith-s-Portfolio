@@ -32,7 +32,7 @@ export default function Workflow() {
 
         <motion.p
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-          style={{ textAlign: 'center', color: 'rgba(240,248,255,0.4)', fontFamily: 'var(--font-mono)', fontSize: '0.78rem', marginTop: '12px', letterSpacing: '0.05em' }}
+          style={{ textAlign: 'center', color: 'var(--muted)', fontFamily: 'var(--font-mono)', fontSize: '0.78rem', marginTop: '12px', letterSpacing: '0.05em' }}
         >
           Energy flows between agents · Packets travel in real-time
         </motion.p>
@@ -54,8 +54,8 @@ export default function Workflow() {
                   style={{
                     display: 'flex', alignItems: 'center', gap: '20px',
                     padding: '20px 28px', borderRadius: '16px',
-                    background: `linear-gradient(135deg, ${node.color}08, rgba(0,0,0,0.3))`,
-                    border: `1px solid ${node.color}33`,
+                    background: `linear-gradient(135deg, color-mix(in srgb, ${node.color} 8%, transparent), var(--bg-card))`,
+                    border: `1px solid color-mix(in srgb, ${node.color} 20%, transparent)`,
                     backdropFilter: 'blur(20px)',
                     cursor: 'default',
                     position: 'relative',
@@ -68,7 +68,7 @@ export default function Workflow() {
                     transition={{ duration: 2 + i * 0.5, repeat: Infinity, delay: i * 0.3 }}
                     style={{
                       position: 'absolute', inset: 0,
-                      background: `radial-gradient(circle at 20% 50%, ${node.color}22, transparent 60%)`,
+                      background: `radial-gradient(circle at 20% 50%, color-mix(in srgb, ${node.color} 15%, transparent), transparent 60%)`,
                       pointerEvents: 'none',
                     }}
                   />
@@ -78,8 +78,9 @@ export default function Workflow() {
                     width: 52, height: 52, borderRadius: '14px', flexShrink: 0,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontSize: '1.5rem',
-                    background: `${node.color}14`, border: `1px solid ${node.color}33`,
-                    boxShadow: `0 0 16px ${node.color}33`,
+                    background: `color-mix(in srgb, ${node.color} 10%, transparent)`, 
+                    border: `1px solid color-mix(in srgb, ${node.color} 25%, transparent)`,
+                    boxShadow: `0 0 16px color-mix(in srgb, ${node.color} 20%, transparent)`,
                   }}>
                     {node.icon}
                   </div>
@@ -89,7 +90,7 @@ export default function Workflow() {
                     <div style={{ fontWeight: 700, color: node.color, fontSize: '1rem', marginBottom: '4px' }}>
                       {node.label}
                     </div>
-                    <div style={{ color: 'rgba(240,248,255,0.5)', fontSize: '0.83rem', lineHeight: 1.5 }}>
+                    <div style={{ color: 'var(--secondary)', fontSize: '0.83rem', lineHeight: 1.5 }}>
                       {node.description}
                     </div>
                   </div>
@@ -98,7 +99,8 @@ export default function Workflow() {
                   <div style={{
                     width: 32, height: 32, borderRadius: '50%', flexShrink: 0,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    background: `${node.color}14`, border: `1px solid ${node.color}44`,
+                    background: `color-mix(in srgb, ${node.color} 10%, transparent)`,
+                    border: `1px solid color-mix(in srgb, ${node.color} 30%, transparent)`,
                     color: node.color, fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700,
                   }}>
                     {String(i + 1).padStart(2, '0')}
@@ -118,7 +120,7 @@ export default function Workflow() {
                     <div style={{ position: 'relative', width: '2px', height: '36px' }}>
                       <div style={{
                         position: 'absolute', inset: 0,
-                        background: `linear-gradient(to bottom, ${node.color}88, ${WORKFLOW[i + 1].color}88)`,
+                        background: `linear-gradient(to bottom, color-mix(in srgb, ${node.color} 55%, transparent), color-mix(in srgb, ${WORKFLOW[i + 1].color} 55%, transparent))`,
                       }} />
                       <motion.div
                         animate={{ top: ['0%', '100%'] }}
@@ -134,7 +136,7 @@ export default function Workflow() {
                     <motion.div
                       animate={{ opacity: [0.3, 1, 0.3] }}
                       transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
-                      style={{ color: `${node.color}88`, fontSize: '1rem' }}
+                      style={{ color: `color-mix(in srgb, ${node.color} 55%, transparent)`, fontSize: '1rem' }}
                     >
                       ↓
                     </motion.div>
@@ -153,15 +155,15 @@ function SectionHeader({ label, title }: { label: string; title: string }) {
   return (
     <div style={{ textAlign: 'center' }}>
       <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-        style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#00d4ff', letterSpacing: '0.2em', marginBottom: '12px' }}>
+        style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--cyan)', opacity: 0.5, letterSpacing: '0.2em', marginBottom: '12px' }}>
         {label}
       </motion.div>
       <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: '#f0f8ff' }}>
+        style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: 'var(--primary)' }}>
         {title}
       </motion.h2>
       <motion.div initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: 0.2, duration: 0.6 }}
-        style={{ width: '60px', height: '3px', background: 'linear-gradient(90deg, #00d4ff, #a855f7)', borderRadius: '2px', margin: '16px auto 0' }} />
+        style={{ width: '60px', height: '3px', background: 'linear-gradient(90deg, var(--cyan), var(--purple))', borderRadius: '2px', margin: '16px auto 0' }} />
     </div>
   );
 }
