@@ -8,7 +8,7 @@ export default function Achievements() {
   const inView = useInView(ref, { once: true, margin: '-60px' });
 
   return (
-    <section id="achievements" className="section" aria-label="Achievements">
+    <div style={{ padding: '40px 0' }}>
       <div className="container">
         <SectionHeader index="07" label="Achievements" title="By the Numbers" />
 
@@ -98,7 +98,7 @@ export default function Achievements() {
           </div>
         </motion.div>
       </div>
-    </section>
+    </div>
   );
 }
 

@@ -7,19 +7,41 @@ const navLinks = [
   { href: '#about', label: 'About' },
   { href: '#skills', label: 'Skills' },
   { href: '#projects', label: 'Projects' },
-  { href: '#workflow', label: 'Workflow' },
-  { href: '#research', label: 'Research' },
+  { href: '#resume', label: 'Resume' },
   { href: '#contact', label: 'Contact' },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [logoCount, setLogoCount] = useState(0);
+  const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(`#${entry.target.id}`);
+          }
+        });
+      },
+      { rootMargin: '-20% 0px -80% 0px' }
+    );
+
+    navLinks.forEach((link) => {
+      if (link.href.startsWith('#') && link.href !== '#resume') {
+        const el = document.querySelector(link.href);
+        if (el) observer.observe(el);
+      }
+    });
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      observer.disconnect();
+    };
   }, []);
 
   const scrollTo = (href: string) => {
@@ -82,27 +104,41 @@ export default function Navbar() {
         </div>
       </motion.button>
 
-      {/* Links */}
-      <nav style={{ display: 'flex', gap: '2px' }}>
-        {navLinks.map((link) => (
-          <motion.button
-            key={link.href}
-            whileHover={{ color: 'var(--cyan)' }}
-            onClick={() => scrollTo(link.href)}
-            data-hover aria-label={`Navigate to ${link.label}`}
-            style={{
-              background: 'none', border: 'none', cursor: 'none',
-              color: 'var(--secondary)', fontSize: '0.875rem',
-              fontFamily: 'var(--font-body)', fontWeight: 500,
-              padding: '8px 14px', borderRadius: '8px',
-              transition: 'color 0.2s, background 0.2s',
-            }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = 'var(--glass-bg)'; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = 'none'; }}
-          >
-            {link.label}
-          </motion.button>
-        ))}
+      <nav style={{ display: 'flex', gap: '2px', position: 'relative' }}>
+        {navLinks.map((link) => {
+          const isActive = activeSection === link.href;
+          return (
+            <div key={link.href} style={{ position: 'relative' }}>
+              <motion.button
+                whileHover={{ color: 'var(--cyan)' }}
+                onClick={() => scrollTo(link.href)}
+                data-hover aria-label={`Navigate to ${link.label}`}
+                style={{
+                  background: 'none', border: 'none', cursor: 'none',
+                  color: isActive ? 'var(--cyan)' : 'var(--secondary)', fontSize: '0.875rem',
+                  fontFamily: 'var(--font-body)', fontWeight: isActive ? 600 : 500,
+                  padding: '8px 14px', borderRadius: '8px',
+                  transition: 'color 0.2s, background 0.2s',
+                }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = 'var(--glass-bg)'; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = 'none'; }}
+              >
+                {link.label}
+              </motion.button>
+              {isActive && (
+                <motion.div
+                  layoutId="activeNavIndicator"
+                  style={{
+                    position: 'absolute', bottom: 0, left: '14px', right: '14px', height: '2px',
+                    background: 'linear-gradient(90deg, transparent, var(--cyan), transparent)',
+                    borderRadius: '2px', boxShadow: '0 0 10px var(--cyan)',
+                  }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                />
+              )}
+            </div>
+          );
+        })}
       </nav>
 
       {/* CTA */}

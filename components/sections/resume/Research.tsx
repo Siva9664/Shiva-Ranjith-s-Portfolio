@@ -4,7 +4,7 @@ import { RESEARCH } from '@/lib/data';
 
 export default function Research() {
   return (
-    <section id="research" className="section" aria-label="Research">
+    <div style={{ padding: '40px 0' }}>
       <div className="container">
         <SectionHeader index="05" label="Research" title="Academic Contributions" />
 
@@ -109,7 +109,7 @@ export default function Research() {
           </motion.div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 

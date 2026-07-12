@@ -21,8 +21,20 @@ export default function EasterEggs() {
   const [aiMessages, setAiMessages] = useState<{ from: 'user' | 'ai'; text: string }[]>([]);
   const [logoClicks, setLogoClicks] = useState(0);
   const [devConsole, setDevConsole] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
   const typedRef = useRef('');
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Auto-greet
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!aiOpen && aiMessages.length === 0) {
+        setShowTooltip(true);
+        setAiMessages([{ from: 'ai', text: "Hello, welcome to Siva's AI Portfolio. I can help you explore projects, skills, and achievements." }]);
+      }
+    }, 12000); // Greet after hero animation + a few seconds
+    return () => clearTimeout(timer);
+  }, [aiOpen, aiMessages.length]);
 
   // Konami code detector
   useEffect(() => {
@@ -110,24 +122,40 @@ export default function EasterEggs() {
         )}
       </AnimatePresence>
 
-      {/* ── AI Assistant Orb ── */}
-      <motion.button
-        onClick={() => setAiOpen((o) => !o)}
-        whileHover={{ scale: 1.1 }}
-        animate={{ boxShadow: ['0 0 20px color-mix(in srgb, var(--cyan) 40%, transparent)', '0 0 40px color-mix(in srgb, var(--cyan) 70%, transparent)', '0 0 20px color-mix(in srgb, var(--cyan) 40%, transparent)'] }}
-        transition={{ boxShadow: { duration: 2, repeat: Infinity } }}
-        data-hover
-        style={{
-          position: 'fixed', bottom: '32px', right: '32px', zIndex: 500,
-          width: 56, height: 56, borderRadius: '50%',
-          background: 'radial-gradient(circle at 35% 35%, color-mix(in srgb, var(--cyan) 90%, transparent), color-mix(in srgb, var(--purple) 60%, transparent))',
-          border: '1px solid color-mix(in srgb, var(--cyan) 60%, transparent)',
-          cursor: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: '1.4rem',
-        }}
-      >
-        🤖
-      </motion.button>
+      <div style={{ position: 'fixed', bottom: '32px', right: '32px', zIndex: 500, display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <AnimatePresence>
+          {showTooltip && !aiOpen && (
+            <motion.div
+              initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, scale: 0.9 }}
+              style={{
+                background: 'var(--glass-bg)', border: '1px solid var(--glass-border)',
+                padding: '10px 16px', borderRadius: '14px', color: 'var(--primary)',
+                fontFamily: 'var(--font-body)', fontSize: '0.85rem', boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+                backdropFilter: 'blur(10px)',
+              }}
+            >
+              Hi! Need help? 👋
+            </motion.div>
+          )}
+        </AnimatePresence>
+        
+        <motion.button
+          onClick={() => { setAiOpen((o) => !o); setShowTooltip(false); }}
+          whileHover={{ scale: 1.1 }}
+          animate={{ boxShadow: ['0 0 20px color-mix(in srgb, var(--cyan) 40%, transparent)', '0 0 40px color-mix(in srgb, var(--cyan) 70%, transparent)', '0 0 20px color-mix(in srgb, var(--cyan) 40%, transparent)'] }}
+          transition={{ boxShadow: { duration: 2, repeat: Infinity } }}
+          data-hover
+          style={{
+            width: 56, height: 56, borderRadius: '50%',
+            background: 'radial-gradient(circle at 35% 35%, color-mix(in srgb, var(--cyan) 90%, transparent), color-mix(in srgb, var(--purple) 60%, transparent))',
+            border: '1px solid color-mix(in srgb, var(--cyan) 60%, transparent)',
+            cursor: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: '1.4rem',
+          }}
+        >
+          🤖
+        </motion.button>
+      </div>
 
       {/* ── AI Chat panel ── */}
       <AnimatePresence>

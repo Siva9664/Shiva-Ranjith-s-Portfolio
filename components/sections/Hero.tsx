@@ -108,15 +108,14 @@ export default function Hero() {
           {PERSONAL.mission}
         </motion.p>
 
-        {/* CTA row */}
         <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 10.5, duration: 0.6 }}
           style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '72px' }}
         >
           <GlowButton href="#projects" primary>View Projects →</GlowButton>
-          <GlowButton href={PERSONAL.github} external>GitHub</GlowButton>
-          <GlowButton href={PERSONAL.linkedin} external>LinkedIn</GlowButton>
+          <GlowButton href="#contact">Contact Me</GlowButton>
+          <GlowButton href={PERSONAL.resume || '#'} external>Download Resume</GlowButton>
         </motion.div>
 
         {/* Domain chips */}

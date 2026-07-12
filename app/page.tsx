@@ -6,10 +6,7 @@ import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
 import Skills from '@/components/sections/Skills';
 import Projects from '@/components/sections/Projects';
-import Workflow from '@/components/sections/Workflow';
-import Research from '@/components/sections/Research';
-import Timeline from '@/components/sections/Timeline';
-import Achievements from '@/components/sections/Achievements';
+import Resume from '@/components/sections/Resume';
 import Contact from '@/components/sections/Contact';
 import EasterEggs from '@/components/ui/EasterEggs';
 
@@ -36,10 +33,7 @@ export default function HomePage() {
         <About />
         <Skills />
         <Projects />
-        <Workflow />
-        <Research />
-        <Timeline />
-        <Achievements />
+        <Resume />
         <Contact />
       </main>
 
